@@ -33,7 +33,10 @@ const Content = () => {
                <label>
                 {item.item}
                </label>
-               <button>Delete</button>
+               <FaTrashAlt 
+                role='button' 
+                tabIndex='0'
+               />
               </li>
             ))}
           </ul>
