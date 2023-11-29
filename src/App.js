@@ -4,6 +4,7 @@ import AddItem from './addItem';
 import Content from './content';
 import Footer from './footer';
 import { useState, useEffect } from 'react';
+import apiRequest from './apiRequest';
 
 function App() {
   const API_URL = 'http://localhost:3500/itemss';
@@ -13,6 +14,7 @@ function App() {
   const [search, setSearch] = useState('')
   const [fetchError, setFetchError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
 
 useEffect(() => {
   
@@ -41,6 +43,14 @@ useEffect(() => {
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
     setItems(listItems);
+
+    const postOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myNewItem)
+    }
   }
 
   const handleCheck = (id) => {
