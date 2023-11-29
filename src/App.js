@@ -69,6 +69,7 @@ useEffect(() => {
         setSearch={setSearch}
       />
       <main>
+        {fetchError && <p style={{color: 'red'}}>{`Error: ${fetchError}`}</p>}
         <Content 
           items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           handleCheck={handleCheck}
