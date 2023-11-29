@@ -12,6 +12,7 @@ function App() {
   const [newItem, setNewItem] = useState('')
   const [search, setSearch] = useState('')
   const [fetchError, setFetchError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
   
@@ -25,9 +26,14 @@ useEffect(() => {
       setFetchError(null);
     } catch (err) {
       setFetchError(err.message)
+    } finally {
+      setIsLoading(false);
     }
   }
-  (async () => await fetchItems())();
+
+  setTimeout(() => {
+    (async () => await fetchItems())();
+  }, 2000)
 
 }, [])
 
@@ -69,12 +75,13 @@ useEffect(() => {
         setSearch={setSearch}
       />
       <main>
+        {isLoading && <p>Loading Items...</p>}
         {fetchError && <p style={{color: 'red'}}>{`Error: ${fetchError}`}</p>}
-        <Content 
+        {!fetchError && !isLoading && <Content 
           items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
           handleCheck={handleCheck}
           handleDelete={handleDelete}
-        />
+        />}
       </main>
       <Footer length={items.length} />
     </div>
