@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import apiRequest from './apiRequest';
 
 function App() {
-  const API_URL = 'http://localhost:3500/itemss';
+  const API_URL = 'http://localhost:3500/items';
 
   const [items, setItems] = useState([]);
   const [newItem, setNewItem] = useState('')
@@ -38,7 +38,7 @@ useEffect(() => {
 
 }, [])
 
-  const addItem = (item) => {
+  const addItem = async (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const myNewItem = { id, checked: false, item };
     const listItems = [...items, myNewItem];
@@ -51,6 +51,8 @@ useEffect(() => {
       },
       body: JSON.stringify(myNewItem)
     }
+    const result = await apiRequest(API_URL, postOptions);
+    if (result) setFetchError(result);
   }
 
   const handleCheck = (id) => {
